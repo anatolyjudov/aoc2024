@@ -2,8 +2,7 @@
 
 $input = file('input.txt', FILE_IGNORE_NEW_LINES);
 
-$piles0 = $guard0 = $pos = [];
-
+$piles = $guard0 = $pos = [];
 $dirs = [[-1, 0], [0, 1], [1, 0], [0, -1]];
 
 $X = strlen($input[0]);
@@ -13,14 +12,13 @@ for($y = 0; $y < $Y; $y++) {
     for($x = 0; $x < $X; $x++) {
         switch($input[$y][$x]) {
             case '^': $guard0 = [$y, $x]; break;
-            case '#': $piles0[$y][$x] = 1; break;
+            case '#': $piles[$y][$x] = 1; break;
         }
     }
 }
 
 $guard = $guard0;
 $dir = 0;
-$piles = $piles0;
 
 while ($guard[0] >= 0 && $guard[0] < $Y && $guard[1] >= 0 && $guard[1] < $X) {
     $pos[implode(',', $guard)][$dir] = 1;
@@ -48,8 +46,6 @@ foreach(array_keys($pos) as $obsKey)
 
     $guard = $guard0;
     $dir = 0;
-    $piles = $piles0;
-    $piles[$obs[0]][$obs[1]] = 1;
 
     $path = [];
 
@@ -57,7 +53,7 @@ foreach(array_keys($pos) as $obsKey)
         do {
             $newY = $guard[0] + $dirs[$dir][0];
             $newX = $guard[1] + $dirs[$dir][1];
-            if (!isset($piles[$newY][$newX])) {
+            if (!isset($piles[$newY][$newX]) && !($newY == $obs[0] && $newX == $obs[1])) {
                 break;
             }
             $dir = ($dir + 1) % 4;
