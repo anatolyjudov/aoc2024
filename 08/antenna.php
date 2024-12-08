@@ -25,17 +25,14 @@ foreach($antennas as $frequency => $places) {
                     $antinodes1[$node[0]][$node[1]] = 1;
 
             // part 2
-            foreach([$p1, $p2] as $p) {
-                foreach([-1, 1] as $dir) {
-                    $step = 1;
-                    while (true) {
-                        $node = [$p[0] + $dir * $step * $diffY, $p[1] + $dir * $step * $diffX];
-                        if ($node[0] < 0 || $node[0] >= $Y || $node[1] < 0 || $node[1] >= $X) {
-                            break;
-                        }
-                        $antinodes2[$node[0]][$node[1]] = 1;
-                        $step++;
-                    }
+            foreach([-1, 1] as $dir) {
+                $antinodes2[$p1[0]][$p1[1]] = 1;
+                $step = 1;
+                while (true) {
+                    $node = [$p1[0] + $dir * $step * $diffY, $p1[1] + $dir * $step * $diffX];
+                    if ($node[0] < 0 || $node[0] >= $Y || $node[1] < 0 || $node[1] >= $X) break;
+                    $antinodes2[$node[0]][$node[1]] = 1;
+                    $step++;
                 }
             }
 
