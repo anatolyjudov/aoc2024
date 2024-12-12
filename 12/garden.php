@@ -10,9 +10,10 @@ $C = count($grid[0]);
 for($y = 0; $y < $R; $y++) for($x = 0; $x < $C; $x++) {
     if (isset($seen[$y][$x])) continue;
     $region = ['area' => 0, 'perimeter' => 0, 'corners' => 0, 'plant' => $grid[$y][$x]];
-    $q = [[$y, $x]];
+    $q = new \Ds\Deque();
+    $q->push([$y, $x]);
     while(count($q) > 0) {
-        list($r, $c) = array_pop($q);
+        list($r, $c) = $q->shift();
         $region['area']++;
         $seen[$r][$c] = $region['plant'];
         foreach([[1, 0], [-1, 0], [0, 1], [0, -1]] as list($dr, $dc)) {
@@ -23,9 +24,9 @@ for($y = 0; $y < $R; $y++) for($x = 0; $x < $C; $x++) {
                 continue;
             }
             if ($grid[$nr][$nc] !== $region['plant']) $region['perimeter']++;
-            if (isset($seen[$nr][$nc]) || in_array([$nr, $nc], $q)) continue;
+            if (isset($seen[$nr][$nc]) || $q->contains([$nr, $nc])) continue;
             if ($grid[$nr][$nc] !== $region['plant']) continue;
-            array_push($q, [$nr, $nc]);
+            $q->push([$nr, $nc]);
         }
         foreach([[[-1, 0], [0, 1]], [[0, 1], [1, 0]], [[1, 0], [0, -1]], [[0, -1], [-1, 0]]] as $tries) {
             $p0 = $grid[$r + $tries[0][0]][$c + $tries[0][1]] ?? ' ';
