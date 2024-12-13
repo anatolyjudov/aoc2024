@@ -10,6 +10,7 @@ printf('First star: %s%sSecond star: %s%s', blink(25, $stones), PHP_EOL, blink(7
 
 function blink(int $times, array $stones): int
 {
+    $max = 0;
     for($blink = 0; $blink < $times; $blink++) {
         $new_stones = [];
         foreach($stones as $stone => $amount) {
@@ -29,6 +30,9 @@ function blink(int $times, array $stones): int
             $new_stones[$new_value] = ($new_stones[$new_value] ?? 0) + $amount;
         }
         $stones = $new_stones;
+        $max = max($max, count($stones));
     }
+
+    echo 'maximum length: ' . $max . PHP_EOL;
     return array_sum($stones);
 }
