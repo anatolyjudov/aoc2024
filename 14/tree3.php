@@ -30,6 +30,13 @@ for($t = 0; $t < $X * $Y; $t++) {
     }
 }
 
+$robotsT = [];
+foreach($robots as $robot) {
+    $robotsT[] = getRobotAfter($robot, $minT);
+}
+
+show($robotsT);
+
 echo 'Second star: ' . $minT . PHP_EOL;
 
 function getRobotAfter(array $robot, int $t): array
@@ -75,4 +82,27 @@ function getRobotQuadrant(array $robot): string
     }
 
     return 0;
+}
+
+function show(array $robots): void
+{
+    global $X, $Y;
+
+    $rmap = [];
+    foreach($robots as $robot) $rmap[$robot[0][1]][$robot[0][0]] = ($rmap[$robot[0][1]][$robot[0][0]] ?? 0) + 1;
+
+    for($r = 0; $r < $Y; $r++) {
+        for($c = 0; $c < $X; $c++) {
+            if (isset($rmap[$r][$c])) {
+                if ($rmap[$r][$c] >= 10) {
+                    echo '*';
+                } else {
+                    echo $rmap[$r][$c];
+                }
+            } else {
+                echo '.';
+            }
+        }
+        echo PHP_EOL;
+    }
 }
