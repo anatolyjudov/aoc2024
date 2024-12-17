@@ -18,7 +18,6 @@ for($t = 0; $t < $X * $Y; $t++) {
     $seen = [];
     $q = ['0' => 0, '1' => 0, '2' => 0, '3' => 0, '4' => 0];
     foreach($robots as $robot) {
-        //$robotsT[] = getRobotAfter($robot, $t);
         $q[getRobotQuadrant(getRobotAfter($robot, $t))]++;
     }
     $safetyFactor = $q[1] * $q[2] * $q[3] * $q[4];
