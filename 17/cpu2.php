@@ -1,11 +1,16 @@
 <?php
 
+$t0 = microtime(true);
+
 $input = file('input.txt', FILE_IGNORE_NEW_LINES);
 $program = array_map(fn($v) => (int)$v, explode(',', substr($input[4], 9)));
 
 $output = run(substr($input[0], 12), $program);
 echo 'First star: ' . implode(',', $output) . PHP_EOL;
 echo 'Second star: ' . getA(0, [], 0, $program) . PHP_EOL;
+
+$t1 = microtime(true);
+printf ('Time %f sec%s', $t1 - $t0, PHP_EOL);
 
 function getA($A, $output, $step, $program) {
     if ($step === count($program)) return $A;
